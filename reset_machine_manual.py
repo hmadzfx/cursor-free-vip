@@ -68,14 +68,14 @@ def get_cursor_paths(translator=None) -> Tuple[str, str]:
     default_paths = {
         "Darwin": "/Applications/Cursor.app/Contents/Resources/app",
         "Windows": os.path.join(os.getenv("LOCALAPPDATA", ""), "Programs", "Cursor", "resources", "app"),
-        "Linux": ["/opt/Cursor/resources/app", "/usr/share/cursor/resources/app", os.path.expanduser("~/.local/share/cursor/resources/app"), "/usr/lib/cursor/app/"]
+        "Linux": ["/opt/Cursor/resources/app", "/usr/share/cursor-bin/resources/app", os.path.expanduser("~/.local/share/cursor/resources/app"), "/usr/lib/cursor/app/"]
     }
     
     if system == "Linux":
         # Look for extracted AppImage with correct usr structure
-        extracted_usr_paths = glob.glob(os.path.expanduser("~/squashfs-root/usr/share/cursor/resources/app"))
+        extracted_usr_paths = glob.glob(os.path.expanduser("~/squashfs-root/usr/share/cursor-bin/resources/app"))
         # Also check current directory for extraction without home path prefix
-        current_dir_paths = glob.glob("squashfs-root/usr/share/cursor/resources/app")
+        current_dir_paths = glob.glob("squashfs-root/usr/share/cursor-bin/resources/app")
         
         # Add any found paths to the Linux paths list
         default_paths["Linux"].extend(extracted_usr_paths)
@@ -218,14 +218,14 @@ def get_workbench_cursor_path(translator=None) -> str:
             "main": "out\\vs\\workbench\\workbench.desktop.main.js"
         },
         "Linux": {
-            "bases": ["/opt/Cursor/resources/app", "/usr/share/cursor/resources/app", "/usr/lib/cursor/app/"],
+            "bases": ["/opt/Cursor/resources/app", "/usr/share/cursor-bin/resources/app", "/usr/lib/cursor-bin/app/"],
             "main": "out/vs/workbench/workbench.desktop.main.js"
         }
     }
     
     if system == "Linux":
         # Add extracted AppImage with correct usr structure
-        extracted_usr_paths = glob.glob(os.path.expanduser("~/squashfs-root/usr/share/cursor/resources/app"))
+        extracted_usr_paths = glob.glob(os.path.expanduser("~/squashfs-root/usr/share/cursor-bin/resources/app"))
             
         paths_map["Linux"]["bases"].extend(extracted_usr_paths)
 
