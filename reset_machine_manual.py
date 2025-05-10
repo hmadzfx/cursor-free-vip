@@ -68,7 +68,7 @@ def get_cursor_paths(translator=None) -> Tuple[str, str]:
     default_paths = {
         "Darwin": "/Applications/Cursor.app/Contents/Resources/app",
         "Windows": os.path.join(os.getenv("LOCALAPPDATA", ""), "Programs", "Cursor", "resources", "app"),
-        "Linux": ["/opt/Cursor/resources/app", "/usr/share/cursor-bin/resources/app", os.path.expanduser("~/.local/share/cursor/resources/app"), "/usr/lib/cursor/app/"]
+        "Linux": ["/opt/cursor-bin/resources/app", "/usr/share/cursor-bin/resources/app", os.path.expanduser("~/.local/share/cursor-bin/resources/app"), "/usr/lib/cursor-bin/app/"]
     }
     
     if system == "Linux":
@@ -218,7 +218,7 @@ def get_workbench_cursor_path(translator=None) -> str:
             "main": "out\\vs\\workbench\\workbench.desktop.main.js"
         },
         "Linux": {
-            "bases": ["/opt/Cursor/resources/app", "/usr/share/cursor-bin/resources/app", "/usr/lib/cursor-bin/app/"],
+            "bases": ["/opt/cursor-bin/resources/app", "/usr/share/cursor-bin/resources/app", "/usr/lib/cursor-bin/app/"],
             "main": "out/vs/workbench/workbench.desktop.main.js"
         }
     }
@@ -567,11 +567,11 @@ class MachineIDResetter:
                 
                 config.set('LinuxPaths', 'storage_path', os.path.abspath(os.path.join(
                     actual_home,
-                    ".config/cursor/User/globalStorage/storage.json"
+                    ".config/cursor-bin/User/globalStorage/storage.json"
                 )))
                 config.set('LinuxPaths', 'sqlite_path', os.path.abspath(os.path.join(
                     actual_home,
-                    ".config/cursor/User/globalStorage/state.vscdb"
+                    ".config/cursor-bin/User/globalStorage/state.vscdb"
                 )))
                 
             self.db_path = config.get('LinuxPaths', 'storage_path')
