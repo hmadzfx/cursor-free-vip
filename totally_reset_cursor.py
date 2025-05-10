@@ -66,14 +66,14 @@ def get_cursor_paths(translator=None) -> Tuple[str, str]:
     default_paths = {
         "Darwin": "/Applications/Cursor.app/Contents/Resources/app",
         "Windows": os.path.join(os.getenv("LOCALAPPDATA", ""), "Programs", "Cursor", "resources", "app"),
-        "Linux": ["/opt/Cursor/resources/app", "/usr/share/cursor/resources/app", os.path.expanduser("~/.local/share/cursor/resources/app")]
+        "Linux": ["/opt/cursor-bin/resources/app", "/usr/share/cursor-bin/resources/app", os.path.expanduser("~/.local/share/cursor-bin/resources/app")]
     }
     
     if system == "Linux":
         # Look for extracted AppImage directories - with usr structure
-        extracted_usr_paths = glob.glob(os.path.expanduser("~/squashfs-root/usr/share/cursor/resources/app"))
+        extracted_usr_paths = glob.glob(os.path.expanduser("~/squashfs-root/usr/share/cursor-bin/resources/app"))
         # Check current directory for extraction without home path prefix
-        current_dir_paths = glob.glob("squashfs-root/usr/share/cursor/resources/app")
+        current_dir_paths = glob.glob("squashfs-root/usr/share/cursor-bin/resources/app")
         
         # Add all paths to the Linux paths list
         default_paths["Linux"].extend(extracted_usr_paths)
@@ -177,7 +177,7 @@ def get_cursor_machine_id_path(translator=None) -> str:
         if not config.has_section('LinuxPaths'):
             config.add_section('LinuxPaths')
             config.set('LinuxPaths', 'machine_id_path',
-                os.path.expanduser("~/.config/cursor/machineid"))
+                os.path.expanduser("~/.config/cursor-bin/machineid"))
         return config.get('LinuxPaths', 'machine_id_path')
         
     elif sys.platform == "darwin":  # macOS
@@ -215,14 +215,14 @@ def get_workbench_cursor_path(translator=None) -> str:
             "main": "out\\vs\\workbench\\workbench.desktop.main.js"
         },
         "Linux": {
-            "bases": ["/opt/Cursor/resources/app", "/usr/share/cursor/resources/app"],
+            "bases": ["/opt/cursor-bin/resources/app", "/usr/share/cursor-bin/resources/app"],
             "main": "out/vs/workbench/workbench.desktop.main.js"
         }
     }
 
     if system == "Linux":
         # Look for extracted AppImage with correct usr structure
-        extracted_usr_paths = glob.glob(os.path.expanduser("~/squashfs-root/usr/share/cursor/resources/app"))
+        extracted_usr_paths = glob.glob(os.path.expanduser("~/squashfs-root/usr/share/cursor-bin/resources/app"))
         # Check current directory for extraction
         current_dir_paths = glob.glob("squashfs-root/usr/share/cursor/resources/app")
   
@@ -558,11 +558,11 @@ class MachineIDResetter:
                 
                 config.set('LinuxPaths', 'storage_path', os.path.abspath(os.path.join(
                     actual_home,
-                    ".config/cursor/User/globalStorage/storage.json"
+                    ".config/cursor-bin/User/globalStorage/storage.json"
                 )))
                 config.set('LinuxPaths', 'sqlite_path', os.path.abspath(os.path.join(
                     actual_home,
-                    ".config/cursor/User/globalStorage/state.vscdb"
+                    ".config/cursor-bin/User/globalStorage/state.vscdb"
                 )))
                 
             self.db_path = config.get('LinuxPaths', 'storage_path')
